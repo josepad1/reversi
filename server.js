@@ -2,7 +2,6 @@
 /* Set up the static file server */
 /* Include the static file webserver library */
 var static = require('node-static');
-
 /*Include the http server library */
 var http = require('http');
 
