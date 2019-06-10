@@ -38,6 +38,8 @@ socket.on('join_room_response', function(payload){
 	
 	/* If we are being notified that we joined the room, then ignore it */
 	if(payload.socket_id == socket.id) {
+		var label = '<h5> Hi <i>'+payload.username+'!<i></h5>';
+		$('#username_label').html(label);
 		return;
 	}
 	
@@ -317,8 +319,27 @@ socket.on('game_update',function(payload){
 		return
 	}
 	
-	$('#my_color').html('<h3 id="my_color"> I am the '+my_color+' cats</h3>');
-	$('#my_color').append('<h4>It is '+payload.game.whose_turn+'\'s turn. Elapsed time <span id="elapsed"</span></h4>');
+	
+	//Allows you to change the name of teams without updating code elsewhere
+	var name_team = '';
+	var what_teams_turn = '';
+	
+	if(my_color == 'black') {
+		name_team = 'Yellow';
+	}
+	if(my_color == 'white') {
+		name_team = 'Purple';
+	}
+	
+	if(payload.game.whose_turn == 'black') {
+		what_teams_turn = 'Yellow';
+	}
+	if(payload.game.whose_turn == 'white') {
+		what_teams_turn = 'Purple';
+	}
+	
+	$('#my_color').html('<h1 id="my_color"> You\'re the '+name_team+' Cats</h1>');
+	$('#my_color').append('<h5> It\'s <b>'+what_teams_turn+'\'s</b> turn! Elapsed time <span id="elapsed"</span></h5>');
 	clearInterval(interval_timer);
 	interval_timer = setInterval(function(last_time) {
 			return function () {
@@ -432,6 +453,15 @@ socket.on('play_token_response',function(payload){
 socket.on('game_over',function(payload){
 	console.log('*** Client Log Message: \'game_over\'\n\t payload: '+JSON.stringify(payload));
 	
+	var what_teams_won = '';
+	
+	if(payload.who_won == 'black') {
+		what_teams_won = 'Yellow';
+	}
+	if(payload.who_won == 'white') {
+		what_teams_won = 'Purple';
+	}
+	
 	/* Check for a good play_token_response */
 	if(payload.result == 'fail') {
 		console.log(payload.message);
@@ -441,6 +471,6 @@ socket.on('game_over',function(payload){
 	console.log('there should be a button here!');
 	
 	/* Jump to a new page */
-	$('#game_over').html('<h1>Game Over</h1> <h2>'+payload.who_won+' won!</h2>');
+	$('#game_over').html('<h1>Game Over</h1> <h2>'+what_teams_won+' won!</h2>');
 	$('#game_over').append('<a href=lobby.html?username='+username+' class="btn btn-success btn-lg active" role="button" aria-pressed="true">Return to the lobby</a>');
 });

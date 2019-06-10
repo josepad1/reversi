@@ -9,7 +9,14 @@
 	
 	<style>
 		#header-row {
-			background-image: url('assets/images/blue.png');
+			background-color: rgb(71, 0, 158);
+			color: white; 
+		}
+		#footer {
+			text-align: center; 
+			padding-top: 2em;
+			padding-bottom: .5em;
+			background-color: white;
 		}
 	</style>
     <!-- Bootstrap CSS -->
@@ -23,7 +30,10 @@
 				<h2>Lobby</h2>
 			</div>
 		</div>
-
+		<div class='row' id='header-row'>
+			<div class= 'col text-center' id='username_label'>
+			</div>
+		</div>
 		<div class='row align-items-end' id= 'players'>
 			<div class='col-9 text-left'>
 				<h3>Players</h3>
@@ -47,8 +57,11 @@
 		</div>
 
 		<div class='row'>
-			<div class='col'>
+			<div class='col text-left'>
 				<div id='messages'>
+				</div>
+				<div id='footer'>
+					<a><i>Informatics 285 Spring 2019</i></a>
 				</div>
 			</div>
 		</div>
